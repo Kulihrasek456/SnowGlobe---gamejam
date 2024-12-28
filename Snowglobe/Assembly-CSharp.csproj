@@ -69,6 +69,7 @@
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Scripts\KeyHandler.cs" />
     <Compile Include="Assets\Scripts\ChestHandler.cs" />
+    <Compile Include="Assets\Scripts\Interactable.cs" />
     <Compile Include="Assets\Scripts\OrbitCamera.cs" />
   </ItemGroup>
   <ItemGroup>
