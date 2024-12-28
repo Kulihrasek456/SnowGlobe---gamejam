@@ -19,6 +19,8 @@ public class KeyHandler : MonoBehaviour
         else{
             Debug.LogError("INVALID KEY ID");
         }
+
+        gameObject.GetComponent<ItemIdentifier>().keyID = keyID;
     }
 
     // Update is called once per frame

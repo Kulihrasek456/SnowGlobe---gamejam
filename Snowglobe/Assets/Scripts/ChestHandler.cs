@@ -11,15 +11,41 @@ public class ChestHandler : MonoBehaviour
     public List<Transform> locks;
     public List<GameObject> gems;
     public List<int> lockIDs;
+    public Transform prefabDisplay; 
     public GameObject storedPrefab;
+
+    private Material baseMaterial;
+
+    public AudioClip openSound;
+    private AudioSource audioSource;
 
 
     private int locksLeft = 0;
 
     public bool reloadNow;
 
+    void changeMaterials(GameObject parent, Material material){
+        MeshRenderer renderer = parent.GetComponent<MeshRenderer>();
+        if (renderer != null){
+            Material[] materialsCopy = renderer.materials;
+            for (int i = 0; i < materialsCopy.Length; i++)
+            {
+                materialsCopy[i] = material;
+            }
+            renderer.materials = materialsCopy;
+        }
+        foreach (Transform child in parent.transform){
+            changeMaterials(child.gameObject, material);
+        }   
+    }
+
+    void Awake() {
+        baseMaterial = Resources.Load<Material>("Materials/MaterialChest");
+    }
+
     void Start()
     {
+        audioSource = gameObject.GetComponent<AudioSource>();
         locksLeft = 0;
         for (int i = 0; i < lockIDs.Count; i++){
             foreach (Transform child in locks[i].transform)
@@ -29,9 +55,15 @@ public class ChestHandler : MonoBehaviour
             if(lockIDs[i] >= 0 ){
                 locksLeft++;
                 GameObject instance = Instantiate(gems[lockIDs[i]],locks[i]);
-                instance.transform.eulerAngles = new Vector3(0f,0f,-90f);
+                instance.transform.Rotate(new Vector3(0f,0f,-90f));
             }
         }
+        GameObject prefabDisplayInstance = Instantiate(storedPrefab,prefabDisplay);
+        changeMaterials(prefabDisplayInstance,baseMaterial);
+        prefabDisplayInstance.transform.localScale = new(0.5f,0.5f,0.5f);
+        prefabDisplayInstance.transform.localPosition=Vector3.zero;
+        prefabDisplayInstance.transform.rotation = transform.rotation;
+        prefabDisplayInstance.tag = "Untagged";
     }
 
     // Update is called once per frame
@@ -57,10 +89,12 @@ public class ChestHandler : MonoBehaviour
         }
         if(locksLeft == 0){
             GameObject newInstance = Instantiate(storedPrefab,transform.parent);
-            newInstance.transform.position += transform.position;
-            Destroy(gameObject);
+            newInstance.transform.position = transform.position;
+            audioSource.PlayOneShot(openSound);
+            gameObject.SetActive(false);
+            Destroy(gameObject, openSound.length);
         }
         return result;
     }
-
+    
 }

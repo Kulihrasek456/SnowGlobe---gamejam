@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+
+
 public class CameraPointer : MonoBehaviour
 {
-    public GameObject lastPointedAt;
-    public GameObject selectedKeyObj;
-    public int selectedKeyId;
+    private class ObjectCombo {
+        public GameObject gameObject;
+        public ItemIdentifier itemIdentifier;
+    }
+
+    private ObjectCombo lastObject;    
 
     private Camera cameraObject;
     // Start is called before the first frame update
@@ -17,6 +22,10 @@ public class CameraPointer : MonoBehaviour
         if(camera){
             cameraObject = camera;
         }
+
+        lastObject = new ObjectCombo();
+        lastObject.itemIdentifier = null;
+        lastObject.gameObject = null;
     }
 
     // Update is called once per frame
@@ -24,44 +33,46 @@ public class CameraPointer : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0)){
             RaycastHit hit;
-
             Ray ray = cameraObject.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit))
-            {
-                lastPointedAt = null;
+            if (Physics.Raycast(ray, out hit)){
+                if(lastObject.itemIdentifier){
+                    lastObject.itemIdentifier.unselect();
+                }
                 if(hit.collider.gameObject.CompareTag("Interactable")){
-                    lastPointedAt = hit.collider.gameObject;
-                    ItemIdentifier itemIdentifier = lastPointedAt.GetComponent<ItemIdentifier>();
-                    if(itemIdentifier){
-                        switch (itemIdentifier.type)
-                        {
-                            case ItemIdentifier.itemType.key:{
-                                selectedKeyObj = lastPointedAt;
-                                selectedKeyId = lastPointedAt.GetComponent<KeyHandler>().keyID;
-                            
-                                Debug.Log("KEY "+selectedKeyId+" SELECTED");
+                    GameObject targetObject = hit.collider.gameObject;
+                    ItemIdentifier itemIdentifier = targetObject.GetComponent<ItemIdentifier>();
+
+                    itemIdentifier.select();
+
+                    switch (itemIdentifier.type){
+                        case ItemIdentifier.itemType.chest:{
+                            if(!lastObject.itemIdentifier){
                                 break;
                             }
-                            case ItemIdentifier.itemType.chest:{
-                                ChestHandler chestHandler = lastPointedAt.GetComponent<ChestHandler>();
-                                Debug.Log("CHEST SELECTED (current key: "+selectedKeyObj+")");
-                                if(selectedKeyId>=0){
-                                    if(chestHandler.CheckForKeyHole(selectedKeyId)){
-                                        Destroy(selectedKeyObj);
-                                    }
-                                }   
-                                selectedKeyId = -1;
-                                selectedKeyObj = null;
-                                break;
+                            if(lastObject.itemIdentifier.type == ItemIdentifier.itemType.key){
+                                ChestHandler chestHandler = targetObject.gameObject.GetComponent<ChestHandler>();
+                                if(chestHandler.CheckForKeyHole(lastObject.itemIdentifier.keyID)){
+                                    Destroy(lastObject.gameObject);
+                                    lastObject.gameObject = null;
+                                }
                             }
-                            default:
-                                selectedKeyId = -1;
-                                selectedKeyObj = null;
-                                break;
-                        }
+                        }break;
+
+                        case ItemIdentifier.itemType.key:{
+                           
+                        }break;
+
+                        default:{
+
+                        }break;
                     }
-                    
+
+                    lastObject.gameObject = targetObject;
+                    lastObject.itemIdentifier = itemIdentifier;
+                }else{
+                    lastObject.gameObject = null;
+                    lastObject.itemIdentifier = null;
                 }
             }
         }
