@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1620656452064162351
+--- !u!1 &4202499604543245944
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,7 +8,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4695068951261983952}
+  - component: {fileID: 5180758672187343033}
   m_Layer: 0
   m_Name: PrefabDisplay
   m_TagString: Untagged
@@ -16,16 +16,16 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4695068951261983952
+--- !u!4 &5180758672187343033
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1620656452064162351}
+  m_GameObject: {fileID: 4202499604543245944}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.6, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 2.63, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 8117130790151152629}
   - component: {fileID: 4134692738318153769}
   - component: {fileID: 571773947119340098}
-  - component: {fileID: 5036550373080695065}
+  - component: {fileID: 3684909089262264456}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Interactable
@@ -161,7 +161,7 @@ Transform:
   - {fileID: 6316246237723656110}
   - {fileID: 8807164686228050552}
   - {fileID: 8035511570859732905}
-  - {fileID: 4695068951261983952}
+  - {fileID: 5180758672187343033}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8117130790151152629
@@ -185,7 +185,7 @@ MonoBehaviour:
   - {fileID: 5984446923472949739, guid: a43d469150586764db3655e057828dcd, type: 3}
   - {fileID: 5713954796683640018, guid: ec61451d16ee9344a93c0e600f16fbd0, type: 3}
   lockIDs: 000000000100000002000000
-  prefabDisplay: {fileID: 4695068951261983952}
+  prefabDisplay: {fileID: 5180758672187343033}
   storedPrefab: {fileID: 919132149155446097, guid: f4d240864b906564e9811ee8710403fc,
     type: 3}
   openSound: {fileID: 8300000, guid: e415ece0884f6454f86cdc8eaf7f9a93, type: 3}
@@ -230,7 +230,7 @@ MonoBehaviour:
   requiredInOrder: 0
   selectSound: {fileID: 8300000, guid: a7121df6a7804aa40af1b73db11bb6c4, type: 3}
   unselectSound: {fileID: 0}
---- !u!82 &5036550373080695065
+--- !u!82 &3684909089262264456
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -384,11 +384,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: -7635826562936255635, guid: b210a123c762b1a41a926512e7f42c2f,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 5aa588b6d8e86fd4db986cc1193aed2b, type: 2}
     - target: {fileID: 919132149155446097, guid: b210a123c762b1a41a926512e7f42c2f,
         type: 3}
       propertyPath: m_Name

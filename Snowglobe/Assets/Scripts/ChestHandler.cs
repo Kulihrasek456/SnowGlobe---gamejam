@@ -58,12 +58,24 @@ public class ChestHandler : MonoBehaviour
                 instance.transform.Rotate(new Vector3(0f,0f,-90f));
             }
         }
+        foreach (Transform child in prefabDisplay)
+        {
+            Destroy(child.gameObject);
+        }
         GameObject prefabDisplayInstance = Instantiate(storedPrefab,prefabDisplay);
         changeMaterials(prefabDisplayInstance,baseMaterial);
         prefabDisplayInstance.transform.localScale = new(0.5f,0.5f,0.5f);
         prefabDisplayInstance.transform.localPosition=Vector3.zero;
         prefabDisplayInstance.transform.rotation = transform.rotation;
         prefabDisplayInstance.tag = "Untagged";
+
+        ItemIdentifier itemIdentifier = prefabDisplayInstance.GetComponent<ItemIdentifier>();
+        if(itemIdentifier){
+            if(itemIdentifier.type == ItemIdentifier.itemType.key){
+                prefabDisplayInstance.transform.Rotate(new(100,0,-90));
+                prefabDisplayInstance.transform.localPosition+=new Vector3(0,0.5f,-1.2f);
+            }
+        }
     }
 
     // Update is called once per frame

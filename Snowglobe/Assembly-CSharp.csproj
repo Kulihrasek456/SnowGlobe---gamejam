@@ -65,10 +65,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\CameraPointer.cs" />
+    <Compile Include="Assets\Scripts\LevelSelectorHandler.cs" />
     <Compile Include="Assets\Scripts\ItemIdentifier.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
+    <Compile Include="Assets\Scripts\SceneSwitcher.cs" />
     <Compile Include="Assets\Scripts\KeyHandler.cs" />
     <Compile Include="Assets\Scripts\ChestHandler.cs" />
+    <Compile Include="Assets\Scripts\LevelSelectCamera.cs" />
     <Compile Include="Assets\Scripts\OrbitCamera.cs" />
   </ItemGroup>
   <ItemGroup>

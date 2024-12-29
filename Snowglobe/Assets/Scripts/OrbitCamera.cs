@@ -16,8 +16,8 @@ public class OrbitCamera : MonoBehaviour
     public float defaultDistance = 25f;
 
 
-    private float maxVerticalAngle = 70f;
-    private float minVerticalAngle = 0f;
+    public float maxVerticalAngle = 70f;
+    public float minVerticalAngle = 0f;
 
 
     private float currDistance;
@@ -25,6 +25,15 @@ public class OrbitCamera : MonoBehaviour
     private UnityEngine.Vector2 mousePos = new UnityEngine.Vector2(0f,0f);
     private Camera cameraObject;
 
+    public Transform cameraTarget;
+
+    [Range(0f, 1f)]
+    public float moveSpeed = 0.5f; 
+    [Range(0f, 1f)]
+    public float scrollSpeed = 0.5f;
+    [Range(0f, 1f)]
+    public float lookSpeed = 0.5f;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +41,7 @@ public class OrbitCamera : MonoBehaviour
         currDistance = defaultDistance;
         Camera camera = GetComponent<Camera>();
         if (camera.orthographic){
-            camera.orthographicSize = currDistance;
+            camera.orthographicSize = Mathf.Lerp(camera.orthographicSize,currDistance,scrollSpeed);
             cameraObject = camera;
         }
     }
@@ -41,18 +50,18 @@ public class OrbitCamera : MonoBehaviour
     void Update()
     {
         if(Input.GetMouseButton(1)){
-            transform.LookAt(lookAtPosition);
+            cameraTarget.LookAt(lookAtPosition);
 
             mousePos.x = Input.GetAxis("Mouse X");
             mousePos.y = Input.GetAxis("Mouse Y");
 
-            UnityEngine.Vector3 newAngles = transform.eulerAngles;
+            UnityEngine.Vector3 newAngles = cameraTarget.eulerAngles;
             newAngles.y += mousePos.x * lookSensitivity;
             newAngles.x = Mathf.Clamp(
                 (-mousePos.y * lookSensitivity) + newAngles.x
                 ,minVerticalAngle,maxVerticalAngle);
 
-            transform.eulerAngles = newAngles;
+            cameraTarget.eulerAngles = newAngles;
             
             
         }
@@ -60,9 +69,12 @@ public class OrbitCamera : MonoBehaviour
         currDistance -= Input.mouseScrollDelta.y*zoomSensitivity;
         currDistance = Mathf.Clamp(currDistance, minDistance, maxDistance);
 
-        transform.position = lookAtPosition.position - transform.forward * 80f;
+        cameraTarget.position = lookAtPosition.position - cameraTarget.forward * 80f;
 
     
-        cameraObject.orthographicSize = currDistance;
+        cameraObject.orthographicSize = Mathf.Lerp(cameraObject.orthographicSize,currDistance,scrollSpeed);
+
+        transform.position = UnityEngine.Vector3.Lerp(transform.position,cameraTarget.position,moveSpeed);
+        transform.rotation = UnityEngine.Quaternion.Lerp(transform.rotation, cameraTarget.rotation, lookSpeed);
     }
 }
