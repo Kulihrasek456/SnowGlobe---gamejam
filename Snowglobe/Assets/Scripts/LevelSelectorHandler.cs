@@ -9,13 +9,25 @@ public class LevelSelectorHandler : MonoBehaviour
     private Vector3 targetPosition = new(0,0,0);
     public GameObject switchButton;
 
-    public float pointedAt;
+    public GameObject World;
+    public ParticleSystem SnowParticleSystem;
+
+    public int levelID;
     
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        if(PlayerPrefs.GetInt("Level"+levelID+"Complete", 0) > 0){
+            SnowParticleSystem.Play();
+            foreach (Transform child in World.transform)
+            {
+                SnowVariantHandler snowVariantHandler = child.gameObject.GetComponent<SnowVariantHandler>();
+                if(snowVariantHandler){
+                    snowVariantHandler.switchToSnowy();
+                }
+            }
+        }
     }
 
     // Update is called once per frame
@@ -35,7 +47,7 @@ public class LevelSelectorHandler : MonoBehaviour
     public void select()
     {
         targetScale = new(2,2,2);
-        targetPosition = new(0,0,-5);
+        targetPosition = new(0,0.1f,-1f);
     }
 
     public void unselect()

@@ -33,7 +33,9 @@ public class OrbitCamera : MonoBehaviour
     public float scrollSpeed = 0.5f;
     [Range(0f, 1f)]
     public float lookSpeed = 0.5f;
-    
+
+    public bool locked = false;
+
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +43,7 @@ public class OrbitCamera : MonoBehaviour
         currDistance = defaultDistance;
         Camera camera = GetComponent<Camera>();
         if (camera.orthographic){
-            camera.orthographicSize = Mathf.Lerp(camera.orthographicSize,currDistance,scrollSpeed);
+            camera.orthographicSize = Mathf.Lerp(camera.orthographicSize,currDistance,scrollSpeed*40*Time.deltaTime);
             cameraObject = camera;
         }
     }
@@ -49,6 +51,9 @@ public class OrbitCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(locked){
+            return;
+        }
         if(Input.GetMouseButton(1)){
             cameraTarget.LookAt(lookAtPosition);
 
@@ -72,9 +77,9 @@ public class OrbitCamera : MonoBehaviour
         cameraTarget.position = lookAtPosition.position - cameraTarget.forward * 80f;
 
     
-        cameraObject.orthographicSize = Mathf.Lerp(cameraObject.orthographicSize,currDistance,scrollSpeed);
+        cameraObject.orthographicSize = Mathf.Lerp(cameraObject.orthographicSize,currDistance,scrollSpeed*40*Time.deltaTime);
 
-        transform.position = UnityEngine.Vector3.Lerp(transform.position,cameraTarget.position,moveSpeed);
-        transform.rotation = UnityEngine.Quaternion.Lerp(transform.rotation, cameraTarget.rotation, lookSpeed);
+        transform.position = UnityEngine.Vector3.Lerp(transform.position,cameraTarget.position,moveSpeed*40*Time.deltaTime);
+        transform.rotation = UnityEngine.Quaternion.Lerp(transform.rotation, cameraTarget.rotation, lookSpeed*40*Time.deltaTime);
     }
 }

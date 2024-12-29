@@ -8,7 +8,8 @@ public class ItemIdentifier : MonoBehaviour
     public enum itemType
     {
         key,
-        chest
+        chest,
+        win
     }
     public itemType type;
 
@@ -27,32 +28,39 @@ public class ItemIdentifier : MonoBehaviour
     public AudioClip unselectSound;
     private AudioSource audioSource;
 
+    private Vector3 targetPosition;
+
     void Start()
     {
         audioSource = gameObject.GetComponent<AudioSource>();
+        targetPosition = transform.localPosition;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        transform.localPosition = Vector3.Lerp(transform.localPosition,targetPosition,0.2f*40*Time.deltaTime);
     }
 
     public void select(){
-        audioSource.PlayOneShot(selectSound);
+        if(selectSound){
+            audioSource.PlayOneShot(selectSound);
+        }
         if(!selected && selectable){
             selected = true;
-            transform.position += moveOnSelect;
+            targetPosition += moveOnSelect;
         }
         
 
     }
 
     public void unselect(){
-        audioSource.PlayOneShot(unselectSound);
+        if(unselectSound){
+            audioSource.PlayOneShot(unselectSound);
+        }
         if(selected){
             selected = false;
-            transform.position -= moveOnSelect;
+            targetPosition -= moveOnSelect;
         }
         
     }

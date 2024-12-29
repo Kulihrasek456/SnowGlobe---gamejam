@@ -2,11 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 
 public class CameraPointer : MonoBehaviour
 {
+
+    public void SetTimeout(System.Action action, float delay)
+    {
+        StartCoroutine(ExecuteAfterDelay(action, delay));
+    }
+
+    private IEnumerator ExecuteAfterDelay(System.Action action, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        action?.Invoke();
+    }
+
     private class ObjectCombo {
         public GameObject gameObject;
         public ItemIdentifier itemIdentifier;
@@ -15,6 +28,8 @@ public class CameraPointer : MonoBehaviour
     private ObjectCombo lastObject;    
 
     private Camera cameraObject;
+
+    public GameObject SnowBall;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,6 +78,10 @@ public class CameraPointer : MonoBehaviour
                            
                         }break;
 
+                        case ItemIdentifier.itemType.win:{
+                            SnowBall.GetComponent<SnowBallHandler>().win();
+                        }break;
+
                         default:{
 
                         }break;
@@ -71,6 +90,12 @@ public class CameraPointer : MonoBehaviour
                     lastObject.gameObject = targetObject;
                     lastObject.itemIdentifier = itemIdentifier;
                 }else{
+                    if(hit.collider.gameObject.GetComponent<SceneSwitcher>()){
+                        gameObject.GetComponent<OrbitCamera>().locked = true;
+                        hit.collider.gameObject.GetComponent<SceneSwitcher>().switchScene(cameraObject);
+                    }
+
+
                     lastObject.gameObject = null;
                     lastObject.itemIdentifier = null;
                 }

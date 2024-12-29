@@ -8,6 +8,17 @@ public class ChestHandler : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    public void SetTimeout(System.Action action, float delay)
+    {
+        StartCoroutine(ExecuteAfterDelay(action, delay));
+    }
+
+    private IEnumerator ExecuteAfterDelay(System.Action action, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        action?.Invoke();
+    }
+
     public List<Transform> locks;
     public List<GameObject> gems;
     public List<int> lockIDs;
@@ -17,6 +28,7 @@ public class ChestHandler : MonoBehaviour
     private Material baseMaterial;
 
     public AudioClip openSound;
+    public AudioClip unlockSound;
     private AudioSource audioSource;
 
 
@@ -92,19 +104,21 @@ public class ChestHandler : MonoBehaviour
         for (int i = 0; i < lockIDs.Count; i++){   
             if(lockIDs[i] == keyID){
                 lockIDs[i] = -1;
-                Debug.Log("LCOK OPENED");
                 reloadNow = true;
                 locksLeft--;
                 result=true;
+                audioSource.PlayOneShot(unlockSound);
                 break;
             }
         }
         if(locksLeft == 0){
-            GameObject newInstance = Instantiate(storedPrefab,transform.parent);
-            newInstance.transform.position = transform.position;
+            
             audioSource.PlayOneShot(openSound);
-            gameObject.SetActive(false);
-            Destroy(gameObject, openSound.length);
+            SetTimeout(()=>{
+                GameObject newInstance = Instantiate(storedPrefab,transform.parent);
+                newInstance.transform.position = transform.position;
+                Destroy(gameObject);
+            },openSound.length);
         }
         return result;
     }

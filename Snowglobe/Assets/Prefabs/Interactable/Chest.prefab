@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 4202499604543245944}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.63, z: 0}
+  m_LocalPosition: {x: 0, y: 3.8100002, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 4941508811883044848}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.34, y: 1, z: -1.3}
+  m_LocalPosition: {x: 1.34, y: 2.18, z: -1.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -87,7 +87,7 @@ Transform:
   m_GameObject: {fileID: 6594291275337583525}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3, y: 1, z: 0}
+  m_LocalPosition: {x: 1.3, y: 2.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -118,7 +118,7 @@ Transform:
   m_GameObject: {fileID: 7943843887324783852}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3, y: 1, z: 1.3}
+  m_LocalPosition: {x: 1.3, y: 2.18, z: 1.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -189,6 +189,7 @@ MonoBehaviour:
   storedPrefab: {fileID: 919132149155446097, guid: f4d240864b906564e9811ee8710403fc,
     type: 3}
   openSound: {fileID: 8300000, guid: e415ece0884f6454f86cdc8eaf7f9a93, type: 3}
+  unlockSound: {fileID: 8300000, guid: 281df229697a8bb46b13b29596b54c05, type: 3}
   reloadNow: 0
 --- !u!65 &4134692738318153769
 BoxCollider:
@@ -210,7 +211,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 2.63515, y: 3.8301253, z: 4.8588943}
-  m_Center: {x: 0, y: 0.75511783, z: 0}
+  m_Center: {x: 0, y: 1.87, z: 0}
 --- !u!114 &571773947119340098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,7 +230,7 @@ MonoBehaviour:
   requiredItems: []
   requiredInOrder: 0
   selectSound: {fileID: 8300000, guid: a7121df6a7804aa40af1b73db11bb6c4, type: 3}
-  unselectSound: {fileID: 0}
+  unselectSound: {fileID: 8300000, guid: 281df229697a8bb46b13b29596b54c05, type: 3}
 --- !u!82 &3684909089262264456
 AudioSource:
   m_ObjectHideFlags: 0
@@ -342,7 +343,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: b210a123c762b1a41a926512e7f42c2f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.1800001
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b210a123c762b1a41a926512e7f42c2f,
         type: 3}
