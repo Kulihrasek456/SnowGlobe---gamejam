@@ -230,7 +230,7 @@ MonoBehaviour:
   requiredItems: []
   requiredInOrder: 0
   selectSound: {fileID: 8300000, guid: a7121df6a7804aa40af1b73db11bb6c4, type: 3}
-  unselectSound: {fileID: 8300000, guid: 281df229697a8bb46b13b29596b54c05, type: 3}
+  unselectSound: {fileID: 0}
 --- !u!82 &3684909089262264456
 AudioSource:
   m_ObjectHideFlags: 0

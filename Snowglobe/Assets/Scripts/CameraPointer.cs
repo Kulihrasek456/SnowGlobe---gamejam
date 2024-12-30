@@ -70,6 +70,7 @@ public class CameraPointer : MonoBehaviour
                                 if(chestHandler.CheckForKeyHole(lastObject.itemIdentifier.keyID)){
                                     Destroy(lastObject.gameObject);
                                     lastObject.gameObject = null;
+                                    lastObject.itemIdentifier = null;
                                 }
                             }
                         }break;

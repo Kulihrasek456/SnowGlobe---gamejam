@@ -107,18 +107,27 @@ public class ChestHandler : MonoBehaviour
                 reloadNow = true;
                 locksLeft--;
                 result=true;
-                audioSource.PlayOneShot(unlockSound);
                 break;
             }
         }
         if(locksLeft == 0){
-            
-            audioSource.PlayOneShot(openSound);
+            audioSource.PlayOneShot(unlockSound);
+            gameObject.tag = "Untagged";
             SetTimeout(()=>{
+                audioSource.PlayOneShot(openSound);
                 GameObject newInstance = Instantiate(storedPrefab,transform.parent);
                 newInstance.transform.position = transform.position;
-                Destroy(gameObject);
-            },openSound.length);
+                foreach (Transform child in transform){
+                    Destroy(child.gameObject);
+                }
+                SetTimeout(()=>{
+                    Destroy(gameObject);
+                },openSound.length);
+            },unlockSound.length);
+            
+        }
+        else if(result){
+            audioSource.PlayOneShot(unlockSound);
         }
         return result;
     }
